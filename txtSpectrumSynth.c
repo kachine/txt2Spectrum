@@ -136,10 +136,12 @@ int main(int argc, char *argv[]){
 			for(uint8_t y=0; y<MAX_DOT; y++){
 				if(getDot(message[charPos],x,y)){
 					for(int i=0; i<duration; i++){
+						// Synthesize waves with fade in/out to anti-click(pop) using sine
+						sample[i] += cos(2.0 * M_PI * freq[y] * i / fs) * 0.5 * (sin(2.0 * M_PI * i/(duration-1) - 0.5 * M_PI) + 1.0);
 						// Synthesize waves with fade in/out to anti-click(pop) using half-sine
 						//sample[i] += cos(2.0 * M_PI * freq[y] * i / fs) * sin(M_PI * i/(duration-1));
 						// Synthesize waves with fade in/out to anti-click(pop) using hanning window
-						sample[i] += cos(2.0 * M_PI * freq[y] * i / fs) * hanning((double)i/(duration-1));
+						//sample[i] += cos(2.0 * M_PI * freq[y] * i / fs) * hanning((double)i/(duration-1));
 					}
 				}
 			}
